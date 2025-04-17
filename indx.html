@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labor Law Terminology - Interactive Exercises</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f5ff;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .exercise-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 15px 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .beginner-header {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+        }
+        .intermediate-header {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+        }
+        .advanced-header {
+            background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .hint {
+            display: none;
+            background-color: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d1fae5;
+            border-left: 4px solid #10b981;
+        }
+        .incorrect {
+            background-color: #fee2e2;
+            border-left: 4px solid #ef4444;
+        }
+        .drag-item {
+            padding: 10px;
+            margin: 5px;
+            background-color: #e0e7ff;
+            border-radius: 5px;
+            cursor: grab;
+            transition: all 0.2s;
+        }
+        .drag-item:hover {
+            background-color: #c7d2fe;
+        }
+        .drop-target {
+            padding: 10px;
+            margin: 5px;
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d5db;
+            border-radius: 5px;
+            min-height: 50px;
+            transition: all 0.2s;
+        }
+        .drop-target.highlight {
+            border-color: #60a5fa;
+            background-color: #e0f2fe;
+        }
+        .drop-target.filled {
+            border-style: solid;
+            border-color: #9ca3af;
+        }
+        .gap-fill-input {
+            border-bottom: 2px solid #6b7280;
+            padding: 2px 5px;
+            margin: 0 5px;
+            min-width: 100px;
+            display: inline-block;
+            text-align: center;
+        }
+        .quiz-option {
+            display: block;
+            padding: 10px 15px;
+            margin: 8px 0;
+            background-color: #f3f4f6;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .quiz-option:hover {
+            background-color: #e0e7ff;
+        }
+        .quiz-option.selected {
+            background-color: #c7d2fe;
+            border-left: 4px solid #6366f1;
+        }
+        .crossword-container {
+            display: grid;
+            grid-template-columns: repeat(10, 40px);
+            grid-template-rows: repeat(10, 40px);
+            gap: 2px;
+            margin: 20px 0;
+        }
+        .crossword-cell {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+        }
+        .crossword-cell.filled {
+            background-color: white;
+            border: 1px solid #9ca3af;
+        }
+        .crossword-cell.empty {
+            background-color: #1f2937;
+        }
+        .cell-number {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            font-size: 0.7rem;
+            font-weight: normal;
+        }
+        .crossword-input {
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: none;
+        }
+        .crossword-input:focus {
+            outline: 2px solid #3b82f6;
+        }
+        .crossword-clues {
+            margin-top: 20px;
+        }
+        .clue-list {
+            margin-bottom: 20px;
+        }
+        .word-search-container {
+            display: grid;
+            grid-template-columns: repeat(15, 30px);
+            grid-template-rows: repeat(15, 30px);
+            gap: 1px;
+            margin: 20px 0;
+        }
+        .word-search-cell {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+        }
+        .word-search-cell.highlighted {
+            background-color: #c7d2fe;
+        }
+        .word-list {
+            columns: 2;
+            margin-top: 20px;
+        }
+        .word-found {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        .progress-container {
+            height: 20px;
+            background-color: #e5e7eb;
+            border-radius: 10px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4ade80 0%, #3b82f6 50%, #8b5cf6 100%);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-weight: bold;
+            line-height: 20px;
+            color: #1f2937;
+            font-size: 0.9rem;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #6366f1;
+            color: #1f2937;
+        }
+        #completion-certificate {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            border: 5px solid #4f46e5;
+            border-radius: 10px;
+            margin: 30px 0;
+            background-color: white;
+        }
+        #certificate-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-bottom: 2px solid #6366f1;
+            margin-top: 10px;
+            padding: 5px;
+            text-align: center;
+            width: 300px;
+        }
+        .btn-primary {
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+        .btn-secondary {
+            background-color: #9ca3af;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #6b7280;
+        }
+        .btn-success {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-success:hover {
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center py-8">
+            <h1 class="text-4xl font-bold text-indigo-800 mb-2">Labor Law Terminology</h1>
+            <p class="text-xl text-gray-600">Interactive Exercises for Business English</p>
+        </header>
+
+        <div id="progress-tracker">
+            <h2 class="text-2xl font-bold mb-2">Your Progress</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+                <div class="progress-text"><span id="completed-exercises">0</span>/<span id="total-exercises">0</span> Completed</div>
+            </div>
+        </div>
+
+        <section id="beginner-section">
+            <h2 class="section-title">Beginner Level</h2>
+
+            <!-- Exercise 1: Matching Basic Labor Law Terms -->
+            <div class="exercise-card" id="exercise-1">
+                <div class="card-header beginner-header">
+                    Exercise 1: Match Basic Labor Law Terms
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Drag each term to its matching definition:</p>
+                    
+                    <div class="flex flex-wrap" id="terms-container">
+                        <div class="drag-item" draggable="true" data-term="minimum-wage">Minimum Wage</div>
+                        <div class="drag-item" draggable="true" data-term="overtime">Overtime</div>
+                        <div class="drag-item" draggable="true" data-term="sick-leave">Sick Leave</div>
+                        <div class="drag-item" draggable="true" data-term="annual-leave">Annual Leave</div>
+                        <div class="drag-item" draggable="true" data-term="termination">Termination</div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <div class="flex mb-3">
+                            <div class="w-1/2 font-semibold">Definition</div>
+                            <div class="w-1/2 font-semibold">Your Answer</div>
+                        </div>
+                        
+                        <div class="flex mb-3 items-center">
+                            <div class="w-1/2">The lowest wage permitted by law that employers can pay their workers</div>
+                            <div class="w-1/2">
+                                <div class="drop-target" data-match="minimum-wage"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex mb-3 items-center">
+                            <div class="w-1/2">Working hours beyond the standard working time, usually with higher pay rate</div>
+                            <div class="w-1/2">
+                                <div class="drop-target" data-match="overtime"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex mb-3 items-center">
+                            <div class="w-1/2">Time off work provided to employees who are ill</div>
+                            <div class="w-1/2">
+                                <div class="drop-target" data-match="sick-leave"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex mb-3 items-center">
+                            <div class="w-1/2">Paid time off work provided annually to employees for rest and recreation</div>
+                            <div class="w-1/2">
+                                <div class="drop-target" data-match="annual-leave"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex mb-3 items-center">
+                            <div class="w-1/2">The end of employment by dismissal or resignation</div>
+                            <div class="w-1/2">
+                                <div class="drop-target" data-match="termination"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="btn-secondary mr-2" id="hint-btn-1">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="check-btn-1">
+                            <i class="fas fa-check mr-1"></i> Check Answers
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-1">
+                        <p><strong>Hint:</strong> Look at the key words in each definition. For example, "lowest wage" relates to minimum wage, while "time off when ill" relates to sick leave.</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-1"></div>
+                </div>
+            </div>
+
+            <!-- Exercise 2: Gap Fill - Basic Rights -->
+            <div class="exercise-card" id="exercise-2">
+                <div class="card-header beginner-header">
+                    Exercise 2: Complete the Sentences - Basic Worker Rights
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Fill in the blanks with the correct terms from the word bank:</p>
+                    
+                    <div class="bg-blue-50 p-3 rounded-lg mb-6">
+                        <strong>Word Bank:</strong> maternity leave, harassment, discrimination, breaks, health and safety
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p>1. All workers have the right to a workplace free from <span class="gap-fill-input" data-answer="harassment" id="gap-1"></span>, including unwanted conduct that creates an intimidating or offensive environment.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p>2. Employers must provide reasonable <span class="gap-fill-input" data-answer="breaks" id="gap-2"></span> during the workday, including meal breaks in most jurisdictions.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p>3. Women have the right to take <span class="gap-fill-input" data-answer="maternity leave" id="gap-3"></span> before and after childbirth with job protection.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p>4. <span class="gap-fill-input" data-answer="discrimination" id="gap-4"></span> based on age, gender, race, religion, disability, or national origin is prohibited in most countries.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <p>5. <span class="gap-fill-input" data-answer="health and safety" id="gap-5"></span> regulations ensure that employers provide a work environment free from recognized hazards.</p>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="btn-secondary mr-2" id="hint-btn-2">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="check-btn-2">
+                            <i class="fas fa-check mr-1"></i> Check Answers
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-2">
+                        <p><strong>Hint:</strong> Think about what protects workers from unwanted behavior (harassment), what workers need during long work hours (breaks), what female workers get when having a baby (maternity leave), what protects people from unfair treatment based on personal characteristics (discrimination), and what regulations protect workers from dangers (health and safety).</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-2"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="intermediate-section">
+            <h2 class="section-title">Intermediate Level</h2>
+
+            <!-- Exercise 3: Multiple Choice Quiz -->
+            <div class="exercise-card" id="exercise-3">
+                <div class="card-header intermediate-header">
+                    Exercise 3: Labor Law Terminology Quiz
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Choose the correct answer for each question:</p>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">1. What is a "collective bargaining agreement"?</p>
+                        <div class="quiz-option" data-question="1" data-option="a">A. A contract between an employer and an individual employee</div>
+                        <div class="quiz-option" data-question="1" data-option="b">B. A contract between an employer and a labor union representing employees</div>
+                        <div class="quiz-option" data-question="1" data-option="c">C. A legal document that outlines general labor laws in a country</div>
+                        <div class="quiz-option" data-question="1" data-option="d">D. A form that employees must sign when joining a company</div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">2. What does "wrongful termination" refer to?</p>
+                        <div class="quiz-option" data-question="2" data-option="a">A. Firing an employee without giving proper notice</div>
+                        <div class="quiz-option" data-question="2" data-option="b">B. Firing an employee for a reason that violates employment law or contract terms</div>
+                        <div class="quiz-option" data-question="2" data-option="c">C. Terminating an entire department due to budget cuts</div>
+                        <div class="quiz-option" data-question="2" data-option="d">D. When an employee quits without giving proper notice</div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">3. What is a "probationary period" in employment?</p>
+                        <div class="quiz-option" data-question="3" data-option="a">A. A time when an employee is being disciplined for poor performance</div>
+                        <div class="quiz-option" data-question="3" data-option="b">B. The time before an employee can join a labor union</div>
+                        <div class="quiz-option" data-question="3" data-option="c">C. An initial period of employment during which performance is evaluated</div>
+                        <div class="quiz-option" data-question="3" data-option="d">D. The time an employee must wait before receiving benefits</div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">4. What is "severance pay"?</p>
+                        <div class="quiz-option" data-question="4" data-option="a">A. Compensation given to employees who are laid off or terminated without cause</div>
+                        <div class="quiz-option" data-question="4" data-option="b">B. Extra pay for working in dangerous conditions</div>
+                        <div class="quiz-option" data-question="4" data-option="c">C. Payment for unused vacation days</div>
+                        <div class="quiz-option" data-question="4" data-option="d">D. A penalty fee paid by employees who quit without notice</div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">5. What is an "EEOC complaint"?</p>
+                        <div class="quiz-option" data-question="5" data-option="a">A. A grievance filed with a labor union</div>
+                        <div class="quiz-option" data-question="5" data-option="b">B. A complaint about workplace ethics</div>
+                        <div class="quiz-option" data-question="5" data-option="c">C. A formal charge of discrimination filed with the Equal Employment Opportunity Commission</div>
+                        <div class="quiz-option" data-question="5" data-option="d">D. A report about unsafe working conditions</div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="btn-secondary mr-2" id="hint-btn-3">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="check-btn-3">
+                            <i class="fas fa-check mr-1"></i> Check Answers
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-3">
+                        <p><strong>Hint:</strong> A collective bargaining agreement involves multiple employees. Wrongful termination relates to illegal reasons for firing. Probationary periods happen when employees first join a company. Severance pay is provided when employment ends. The EEOC deals with discrimination issues.</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-3"></div>
+                </div>
+            </div>
+
+            <!-- Exercise 4: Word Search - Labor Law Terminology -->
+            <div class="exercise-card" id="exercise-4">
+                <div class="card-header intermediate-header">
+                    Exercise 4: Labor Law Terminology Word Search
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Find and highlight the labor law terms hidden in the word search puzzle:</p>
+                    
+                    <div class="flex flex-wrap">
+                        <div class="mr-6">
+                            <div class="word-search-container" id="word-search-grid">
+                                <!-- Generated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="font-bold mb-2">Words to Find:</h3>
+                            <div class="word-list" id="word-search-words">
+                                <div><span class="word-item" data-word="ARBITRATION">ARBITRATION</span></div>
+                                <div><span class="word-item" data-word="COMPENSATION">COMPENSATION</span></div>
+                                <div><span class="word-item" data-word="GRIEVANCE">GRIEVANCE</span></div>
+                                <div><span class="word-item" data-word="HARASSMENT">HARASSMENT</span></div>
+                                <div><span class="word-item" data-word="LIABILITY">LIABILITY</span></div>
+                                <div><span class="word-item" data-word="MEDIATION">MEDIATION</span></div>
+                                <div><span class="word-item" data-word="PENSION">PENSION</span></div>
+                                <div><span class="word-item" data-word="REGULATIONS">REGULATIONS</span></div>
+                                <div><span class="word-item" data-word="TERMINATION">TERMINATION</span></div>
+                                <div><span class="word-item" data-word="UNION">UNION</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button class="btn-secondary mr-2" id="hint-btn-4">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="reset-wordsearch-btn">
+                            <i class="fas fa-redo mr-1"></i> Reset Puzzle
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-4">
+                        <p><strong>Hint:</strong> Words can be found horizontally, vertically, and diagonally in both directions. Try looking for the first letter of each word and then check in all directions.</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-4"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="advanced-section">
+            <h2 class="section-title">Advanced Level</h2>
+
+            <!-- Exercise 5: Crossword Puzzle -->
+            <div class="exercise-card" id="exercise-5">
+                <div class="card-header advanced-header">
+                    Exercise 5: Labor Law Terminology Crossword
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Complete the crossword puzzle using the clues provided:</p>
+                    
+                    <div class="flex flex-wrap">
+                        <div class="crossword-container" id="crossword-grid">
+                            <!-- Generated by JavaScript -->
+                        </div>
+                        
+                        <div class="ml-6 flex-1">
+                            <div class="crossword-clues">
+                                <div class="clue-list">
+                                    <h3 class="font-bold mb-2">Across:</h3>
+                                    <p>1. The right of employees to join together to improve working conditions (10)</p>
+                                    <p>3. A document that outlines the terms and conditions of employment (8)</p>
+                                    <p>5. Process where a neutral third party helps resolve disputes (9)</p>
+                                    <p>7. A formal complaint about a violation of workplace rights (9)</p>
+                                    <p>9. Payment for employees who work more than standard hours (8)</p>
+                                </div>
+                                
+                                <div class="clue-list">
+                                    <h3 class="font-bold mb-2">Down:</h3>
+                                    <p>2. Money awarded to an employee who has been injured at work (12)</p>
+                                    <p>4. Prohibition of different treatment based on protected characteristics (14)</p>
+                                    <p>6. Required breaks for new mothers to express milk (9)</p>
+                                    <p>8. A legal duty or responsibility (10)</p>
+                                    <p>10. Time off for medical or family reasons (5)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <button class="btn-secondary mr-2" id="hint-btn-5">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="check-btn-5">
+                            <i class="fas fa-check mr-1"></i> Check Answers
+                        </button>
+                        <button class="btn-secondary ml-2" id="reveal-btn-5">
+                            <i class="fas fa-eye mr-1"></i> Reveal Solution
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-5">
+                        <p><strong>Hint:</strong> Across 1: Workers forming groups to advocate for better conditions. Down 2: Financial payment after workplace injury. Across 5: Someone helps both sides reach an agreement. Down 4: Law against treating people differently based on race, gender, etc.</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-5"></div>
+                </div>
+            </div>
+
+            <!-- Exercise 6: Case Study Analysis -->
+            <div class="exercise-card" id="exercise-6">
+                <div class="card-header advanced-header">
+                    Exercise 6: Labor Law Case Study Analysis
+                </div>
+                <div class="card-body">
+                    <p class="mb-4">Read the following case study and answer the questions using advanced labor law terminology:</p>
+                    
+                    <div class="bg-purple-50 p-4 rounded-lg mb-6">
+                        <h3 class="font-bold mb-2">Case Study: Global Tech Solutions</h3>
+                        <p>Maria has been working at Global Tech Solutions for five years. Recently, the company introduced a new policy requiring employees to work on weekends without additional compensation. When Maria complained, her supervisor assigned her to less desirable projects and excluded her from important meetings. Last week, Maria discovered that male colleagues with less experience were receiving higher salaries. After filing a formal complaint with HR, Maria was told her position was being eliminated due to "restructuring." However, two weeks after her departure, the company hired a new person for a very similar role.</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">1. What type of discrimination might Maria be experiencing?</p>
+                        <textarea id="case-answer-1" class="w-full p-2 border border-gray-300 rounded" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">2. What is the legal term for the negative treatment Maria received after her complaint?</p>
+                        <textarea id="case-answer-2" class="w-full p-2 border border-gray-300 rounded" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">3. What type of termination might Maria claim she experienced?</p>
+                        <textarea id="case-answer-3" class="w-full p-2 border border-gray-300 rounded" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold mb-2">4. What legal action could Maria potentially take against the company?</p>
+                        <textarea id="case-answer-4" class="w-full p-2 border border-gray-300 rounded" rows="2"></textarea>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <button class="btn-secondary mr-2" id="hint-btn-6">
+                            <i class="fas fa-lightbulb mr-1"></i> Hint
+                        </button>
+                        <button class="btn-primary" id="check-btn-6">
+                            <i class="fas fa-check mr-1"></i> Check Answers
+                        </button>
+                    </div>
+                    
+                    <div class="hint" id="hint-6">
+                        <p><strong>Hint:</strong> For question 1, think about the difference in pay between Maria and her male colleagues (gender discrimination). For question 2, consider what happens when an employee is treated poorly after making a complaint (retaliation). For question 3, think about terminations that happen for illegal reasons masked as legitimate ones (wrongful termination or constructive dismissal). For question 4, consider legal options like filing a complaint with government agencies or filing a lawsuit (EEOC complaint, wrongful termination lawsuit).</p>
+                    </div>
+                    
+                    <div class="feedback" id="feedback-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <div id="completion-certificate" class="my-10">
+            <h2 class="text-3xl font-bold text-indigo-800 mb-4">Certificate of Completion</h2>
+            <p class="text-xl mb-6">This is to certify that</p>
+            <input type="text" id="certificate-name" placeholder="Enter your name" class="mb-6">
+            <p class="text-xl mb-6">has successfully completed the Labor Law Terminology Interactive Exercises for Business English</p>
+            <p class="text-lg mb-2">Date: <span id="certificate-date"></span></p>
+            <button class="btn-success mt-4" id="print-certificate-btn">
+                <i class="fas fa-print mr-1"></i> Save as PDF
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize exercise count for progress tracking
+            const totalExercises = 6;
+            let completedExercises = 0;
+            const completedExercisesSet = new Set();
+            
+            document.getElementById('total-exercises').textContent = totalExercises;
+            
+            // Update progress function
+            function updateProgress() {
+                const progressPercent = (completedExercisesSet.size / totalExercises) * 100;
+                document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+                document.getElementById('completed-exercises').textContent = completedExercisesSet.size;
+                
+                // Show certificate if all exercises are completed
+                if (completedExercisesSet.size === totalExercises) {
+                    document.getElementById('completion-certificate').style.display = 'block';
+                    document.getElementById('certificate-date').textContent = new Date().toLocaleDateString();
+                }
+            }
+            
+            // Hint buttons functionality
+            document.querySelectorAll('[id^="hint-btn-"]').forEach(button => {
+                const hintId = button.id.replace('hint-btn-', 'hint-');
+                button.addEventListener('click', function() {
+                    const hint = document.getElementById(hintId);
+                    if (hint.style.display === 'block') {
+                        hint.style.display = 'none';
+                    } else {
+                        hint.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Exercise 1: Drag and Drop Matching
+            const dragItems = document.querySelectorAll('.drag-item');
+            const dropTargets = document.querySelectorAll('.drop-target');
+            
+            let draggedItem = null;
+            
+            // Add drag event listeners
+            dragItems.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('dragend', handleDragEnd);
+            });
+            
+            // Add drop target event listeners
+            dropTargets.forEach(target => {
+                target.addEventListener('dragover', handleDragOver);
+                target.addEventListener('dragenter', handleDragEnter);
+                target.addEventListener('dragleave', handleDragLeave);
+                target.addEventListener('drop', handleDrop);
+            });
+            
+            function handleDragStart(e) {
+                draggedItem = this;
+                e.dataTransfer.setData('text/plain', this.dataset.term);
+                setTimeout(() => this.style.opacity = '0.4', 0);
+            }
+            
+            function handleDragEnd() {
+                draggedItem = null;
+                this.style.opacity = '1';
+            }
+            
+            function handleDragOver(e) {
+                e.preventDefault();
+            }
+            
+            function handleDragEnter(e) {
+                e.preventDefault();
+                this.classList.add('highlight');
+            }
+            
+            function handleDragLeave() {
+                this.classList.remove('highlight');
+            }
+            
+            function handleDrop(e) {
+                e.preventDefault();
+                this.classList.remove('highlight');
+                
+                // Check if the target already has a child
+                if (this.children.length === 0) {
+                    const termData = e.dataTransfer.getData('text/plain');
+                    const dragItem = document.querySelector(`[data-term="${termData}"]`);
+                    
+                    // Clone the dragged item and append it to the drop target
+                    const clone = dragItem.cloneNode(true);
+                    clone.style.opacity = '1';
+                    clone.style.cursor = 'default';
+                    clone.draggable = false;
+                    this.appendChild(clone);
+                    
+                    // Update visual state
+                    this.classList.add('filled');
+                    dragItem.style.display = 'none';
+                }
+            }
+            
+            // Check answers for Exercise 1
+            document.getElementById('check-btn-1').addEventListener('click', function() {
+                let correct = 0;
+                let total = dropTargets.length;
+                
+                dropTargets.forEach(target => {
+                    const expectedMatch = target.dataset.match;
+                    
+                    if (target.children.length > 0) {
+                        const actualMatch = target.children[0].dataset.term;
+                        
+                        if (actualMatch === expectedMatch) {
+                            target.style.backgroundColor = '#d1fae5';
+                            correct++;
+                        } else {
+                            target.style.backgroundColor = '#fee2e2';
+                        }
+                    }
+                });
+                
+                const feedback = document.getElementById('feedback-1');
+                feedback.style.display = 'block';
+                
+                if (correct === total) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = `<p><strong>Great job!</strong> You've correctly matched all ${total} terms!</p>`;
+                    if (!completedExercisesSet.has(1)) {
+                        completedExercisesSet.add(1);
+                        updateProgress();
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Not quite there yet.</strong> You've matched ${correct} out of ${total} terms correctly. Try again!</p>`;
+                }
+            });
+            
+            // Exercise 2: Gap Fill
+            const gapInputs = document.querySelectorAll('.gap-fill-input');
+            
+            gapInputs.forEach(gap => {
+                gap.contentEditable = true;
+                gap.addEventListener('focus', function() {
+                    this.classList.add('border-blue-400');
+                });
+                gap.addEventListener('blur', function() {
+                    this.classList.remove('border-blue-400');
+                });
+            });
+            
+            // Check answers for Exercise 2
+            document.getElementById('check-btn-2').addEventListener('click', function() {
+                let correct = 0;
+                let total = gapInputs.length;
+                
+                gapInputs.forEach(input => {
+                    const expectedAnswer = input.dataset.answer.toLowerCase();
+                    const userAnswer = input.textContent.trim().toLowerCase();
+                    
+                    if (userAnswer === expectedAnswer) {
+                        input.style.backgroundColor = '#d1fae5';
+                        input.style.borderColor = '#10b981';
+                        correct++;
+                    } else {
+                        input.style.backgroundColor = '#fee2e2';
+                        input.style.borderColor = '#ef4444';
+                    }
+                });
+                
+                const feedback = document.getElementById('feedback-2');
+                feedback.style.display = 'block';
+                
+                if (correct === total) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = `<p><strong>Excellent!</strong> You've filled in all ${total} gaps correctly!</p>`;
+                    if (!completedExercisesSet.has(2)) {
+                        completedExercisesSet.add(2);
+                        updateProgress();
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Almost there!</strong> You've filled in ${correct} out of ${total} gaps correctly. Try again!</p>`;
+                }
+            });
+            
+            // Exercise 3: Multiple Choice Quiz
+            const quizOptions = document.querySelectorAll('.quiz-option');
+            const answers = {
+                1: 'b',
+                2: 'b',
+                3: 'c',
+                4: 'a',
+                5: 'c'
+            };
+            
+            quizOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect other options for the same question
+                    const questionNumber = this.dataset.question;
+                    document.querySelectorAll(`.quiz-option[data-question="${questionNumber}"]`).forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Check answers for Exercise 3
+            document.getElementById('check-btn-3').addEventListener('click', function() {
+                let correct = 0;
+                let total = Object.keys(answers).length;
+                let attempted = 0;
+                
+                // Check each question
+                for (let i = 1; i <= total; i++) {
+                    const selectedOption = document.querySelector(`.quiz-option[data-question="${i}"].selected`);
+                    
+                    if (selectedOption) {
+                        attempted++;
+                        const userAnswer = selectedOption.dataset.option;
+                        const correctAnswer = answers[i];
+                        
+                        if (userAnswer === correctAnswer) {
+                            selectedOption.style.backgroundColor = '#d1fae5';
+                            selectedOption.style.borderLeft = '4px solid #10b981';
+                            correct++;
+                        } else {
+                            selectedOption.style.backgroundColor = '#fee2e2';
+                            selectedOption.style.borderLeft = '4px solid #ef4444';
+                            
+                            // Highlight the correct answer
+                            const correctOption = document.querySelector(`.quiz-option[data-question="${i}"][data-option="${correctAnswer}"]`);
+                            correctOption.style.backgroundColor = '#d1fae5';
+                            correctOption.style.borderLeft = '4px solid #10b981';
+                        }
+                    }
+                }
+                
+                const feedback = document.getElementById('feedback-3');
+                feedback.style.display = 'block';
+                
+                if (attempted < total) {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Please answer all questions.</strong> You've attempted ${attempted} out of ${total} questions.</p>`;
+                } else if (correct === total) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = `<p><strong>Perfect score!</strong> You've answered all ${total} questions correctly!</p>`;
+                    if (!completedExercisesSet.has(3)) {
+                        completedExercisesSet.add(3);
+                        updateProgress();
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Good attempt!</strong> You've answered ${correct} out of ${total} questions correctly. Review the highlighted answers and try again!</p>`;
+                }
+            });
+            
+            // Exercise 4: Word Search
+            const wordSearchGrid = document.getElementById('word-search-grid');
+            const wordList = ['ARBITRATION', 'COMPENSATION', 'GRIEVANCE', 'HARASSMENT', 'LIABILITY', 'MEDIATION', 'PENSION', 'REGULATIONS', 'TERMINATION', 'UNION'];
+            const gridSize = 15;
+            let wordSearchMatrix = [];
+            let selectedCells = [];
+            let foundWords = new Set();
+            
+            // Initialize word search grid
+            function initializeWordSearch() {
+                // Create empty matrix
+                wordSearchMatrix = Array(gridSize).fill().map(() => Array(gridSize).fill(''));
+                
+                // Place words in the grid
+                wordList.forEach(word => {
+                    placeWordInGrid(word);
+                });
+                
+                // Fill remaining empty cells with random letters
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        if (wordSearchMatrix[i][j] === '') {
+                            const randomLetter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+                            wordSearchMatrix[i][j] = randomLetter;
+                        }
+                    }
+                }
+                
+                // Render the grid
+                renderWordSearchGrid();
+            }
+            
+            function placeWordInGrid(word) {
+                const directions = [
+                    [0, 1],   // horizontal
+                    [1, 0],   // vertical
+                    [1, 1],   // diagonal down-right
+                    [1, -1],  // diagonal down-left
+                    [0, -1],  // horizontal backwards
+                    [-1, 0],  // vertical backwards
+                    [-1, -1], // diagonal up-left
+                    [-1, 1]   // diagonal up-right
+                ];
+                
+                let placed = false;
+                let attempts = 0;
+                const maxAttempts = 100;
+                
+                while (!placed && attempts < maxAttempts) {
+                    attempts++;
+                    
+                    // Choose random starting position and direction
+                    const dirIndex = Math.floor(Math.random() * directions.length);
+                    const [dRow, dCol] = directions[dirIndex];
+                    const row = Math.floor(Math.random() * gridSize);
+                    const col = Math.floor(Math.random() * gridSize);
+                    
+                    // Check if word fits in this direction
+                    let fits = true;
+                    for (let i = 0; i < word.length; i++) {
+                        const newRow = row + i * dRow;
+                        const newCol = col + i * dCol;
+                        
+                        if (newRow < 0 || newRow >= gridSize || newCol < 0 || newCol >= gridSize) {
+                            fits = false;
+                            break;
+                        }
+                        
+                        if (wordSearchMatrix[newRow][newCol] !== '' && wordSearchMatrix[newRow][newCol] !== word[i]) {
+                            fits = false;
+                            break;
+                        }
+                    }
+                    
+                    // Place the word if it fits
+                    if (fits) {
+                        for (let i = 0; i < word.length; i++) {
+                            const newRow = row + i * dRow;
+                            const newCol = col + i * dCol;
+                            wordSearchMatrix[newRow][newCol] = word[i];
+                        }
+                        placed = true;
+                    }
+                }
+                
+                // If word couldn't be placed after max attempts, place it horizontally from start
+                if (!placed) {
+                    for (let i = 0; i < word.length; i++) {
+                        wordSearchMatrix[0][i] = word[i];
+                    }
+                }
+            }
+            
+            function renderWordSearchGrid() {
+                wordSearchGrid.innerHTML = '';
+                
+                for (let i = 0; i < gridSize; i++) {
+                    for (let j = 0; j < gridSize; j++) {
+                        const cell = document.createElement('div');
+                        cell.className = 'word-search-cell';
+                        cell.dataset.row = i;
+                        cell.dataset.col = j;
+                        cell.textContent = wordSearchMatrix[i][j];
+                        
+                        cell.addEventListener('mousedown', startWordSelection);
+                        cell.addEventListener('mouseover', continueWordSelection);
+                        cell.addEventListener('mouseup', endWordSelection);
+                        
+                        wordSearchGrid.appendChild(cell);
+                    }
+                }
+                
+                // Add mouseup event to the document to handle cases where mouse is released outside the grid
+                document.addEventListener('mouseup', endWordSelection);
+            }
+            
+            let isSelecting = false;
+            
+            function startWordSelection() {
+                isSelecting = true;
+                selectedCells = [this];
+                this.classList.add('highlighted');
+            }
+            
+            function continueWordSelection() {
+                if (!isSelecting) return;
+                
+                const lastCell = selectedCells[selectedCells.length - 1];
+                const lastRow = parseInt(lastCell.dataset.row);
+                const lastCol = parseInt(lastCell.dataset.col);
+                const currentRow = parseInt(this.dataset.row);
+                const currentCol = parseInt(this.dataset.col);
+                
+                // Check if this cell is adjacent to the last one in a straight line
+                const rowDiff = currentRow - lastRow;
+                const colDiff = currentCol - lastCol;
+                
+                if (selectedCells.length === 1 || 
+                    (rowDiff === lastRow - parseInt(selectedCells[selectedCells.length - 2].dataset.row) && 
+                     colDiff === lastCol - parseInt(selectedCells[selectedCells.length - 2].dataset.col))) {
+                    
+                    // Check if this cell is already in the selection
+                    if (!selectedCells.includes(this)) {
+                        selectedCells.push(this);
+                        this.classList.add('highlighted');
+                    }
+                }
+            }
+            
+            function endWordSelection() {
+                if (!isSelecting) return;
+                isSelecting = false;
+                
+                // Get the selected word
+                const selectedWord = selectedCells.map(cell => cell.textContent).join('');
+                
+                // Check if the word is in the word list
+                if (wordList.includes(selectedWord)) {
+                    // Highlight found word in the list
+                    document.querySelector(`[data-word="${selectedWord}"]`).classList.add('word-found');
+                    foundWords.add(selectedWord);
+                    
+                    // Keep cells highlighted to show found word
+                    selectedCells.forEach(cell => {
+                        cell.style.backgroundColor = '#bae6fd';
+                    });
+                    
+                    // Check if all words are found
+                    if (foundWords.size === wordList.length) {
+                        const feedback = document.getElementById('feedback-4');
+                        feedback.className = 'feedback correct';
+                        feedback.innerHTML = '<p><strong>Congratulations!</strong> You\'ve found all the words!</p>';
+                        feedback.style.display = 'block';
+                        
+                        if (!completedExercisesSet.has(4)) {
+                            completedExercisesSet.add(4);
+                            updateProgress();
+                        }
+                    }
+                } else {
+                    // Clear selection if word is not in the list
+                    selectedCells.forEach(cell => {
+                        cell.classList.remove('highlighted');
+                    });
+                }
+                
+                selectedCells = [];
+            }
+            
+            // Reset word search
+            document.getElementById('reset-wordsearch-btn').addEventListener('click', function() {
+                foundWords = new Set();
+                document.querySelectorAll('.word-item').forEach(item => {
+                    item.classList.remove('word-found');
+                });
+                initializeWordSearch();
+            });
+            
+            // Exercise 5: Crossword Puzzle
+            const crosswordAnswers = {
+                across: {
+                    1: 'COLLECTIVE',
+                    3: 'CONTRACT',
+                    5: 'MEDIATION',
+                    7: 'GRIEVANCE',
+                    9: 'OVERTIME'
+                },
+                down: {
+                    2: 'COMPENSATION',
+                    4: 'DISCRIMINATION',
+                    6: 'LACTATION',
+                    8: 'OBLIGATION',
+                    10: 'LEAVE'
+                }
+            };
+            
+            const crosswordLayout = [
+                [0,0,0,0,0,0,2,0,0,0],
+                [1,1,1,1,1,1,1,1,1,1],
+                [0,0,0,0,0,0,2,0,0,0],
+                [0,0,0,3,3,3,3,3,3,3],
+                [0,0,0,0,4,0,2,0,0,0],
+                [5,5,5,5,4,5,5,5,5,0],
+                [0,0,0,0,4,0,2,0,8,0],
+                [7,7,7,7,4,7,7,7,8,7],
+                [0,0,0,6,4,0,0,0,8,0],
+                [9,9,9,6,9,9,9,9,8,0],
+                [0,0,0,6,0,0,0,0,8,10],
+                [0,0,0,6,0,0,0,0,0,10],
+                [0,0,0,6,0,0,0,0,0,10],
+                [0,0,0,6,0,0,0,0,0,10],
+                [0,0,0,0,0,0,0,0,0,10]
+            ];
+            
+            const crosswordGrid = document.getElementById('crossword-grid');
+            const crosswordInputs = {};
+            
+            function initializeCrossword() {
+                crosswordGrid.innerHTML = '';
+                
+                for (let i = 0; i < crosswordLayout.length; i++) {
+                    for (let j = 0; j < crosswordLayout[i].length; j++) {
+                        const cell = document.createElement('div');
+                        const value = crosswordLayout[i][j];
+                        
+                        if (value === 0) {
+                            cell.className = 'crossword-cell empty';
+                        } else {
+                            cell.className = 'crossword-cell filled';
+                            
+                            // Add cell number if needed
+                            const isNumbered = (i === 0 || crosswordLayout[i-1][j] === 0) && value > 0 && 
+                                            ((j === 0 || crosswordLayout[i][j-1] === 0) || 
+                                             (i === 0 || crosswordLayout[i-1][j] === 0));
+                            
+                            if (isNumbered) {
+                                const cellNumber = document.createElement('span');
+                                cellNumber.className = 'cell-number';
+                                cellNumber.textContent = value;
+                                cell.appendChild(cellNumber);
+                            }
+                            
+                            // Add input field
+                            const input = document.createElement('input');
+                            input.className = 'crossword-input';
+                            input.maxLength = 1;
+                            input.type = 'text';
+                            input.dataset.row = i;
+                            input.dataset.col = j;
+                            input.dataset.clue = value;
+                            
+                            // Store input reference
+                            if (!crosswordInputs[value]) {
+                                crosswordInputs[value] = [];
+                            }
+                            crosswordInputs[value].push(input);
+                            
+                            // Add event listeners for navigation
+                            input.addEventListener('keydown', function(e) {
+                                if (e.key === 'ArrowRight') {
+                                    navigateToCell(i, j+1);
+                                } else if (e.key === 'ArrowLeft') {
+                                    navigateToCell(i, j-1);
+                                } else if (e.key === 'ArrowUp') {
+                                    navigateToCell(i-1, j);
+                                } else if (e.key === 'ArrowDown') {
+                                    navigateToCell(i+1, j);
+                                }
+                            });
+                            
+                            input.addEventListener('input', function() {
+                                if (this.value) {
+                                    // Auto-navigate to next cell
+                                    if (j < crosswordLayout[i].length - 1 && crosswordLayout[i][j+1] !== 0) {
+                                        navigateToCell(i, j+1);
+                                    } else if (i < crosswordLayout.length - 1 && crosswordLayout[i+1][j] !== 0) {
+                                        navigateToCell(i+1, j);
+                                    }
+                                }
+                                this.value = this.value.toUpperCase();
+                            });
+                            
+                            cell.appendChild(input);
+                        }
+                        
+                        crosswordGrid.appendChild(cell);
+                    }
+                }
+            }
+            
+            function navigateToCell(row, col) {
+                if (row >= 0 && row < crosswordLayout.length && col >= 0 && col < crosswordLayout[0].length) {
+                    if (crosswordLayout[row][col] !== 0) {
+                        const nextInput = document.querySelector(`input[data-row="${row}"][data-col="${col}"]`);
+                        if (nextInput) {
+                            nextInput.focus();
+                        }
+                    }
+                }
+            }
+            
+            // Check answers for Exercise 5
+            document.getElementById('check-btn-5').addEventListener('click', function() {
+                let correct = 0;
+                let total = 0;
+                
+                // Check across answers
+                for (const clueNumber in crosswordAnswers.across) {
+                    const answer = crosswordAnswers.across[clueNumber];
+                    const inputs = crosswordInputs[clueNumber];
+                    
+                    if (inputs) {
+                        total++;
+                        let userAnswer = '';
+                        inputs.forEach(input => {
+                            userAnswer += input.value || '';
+                        });
+                        
+                        if (userAnswer === answer) {
+                            inputs.forEach(input => {
+                                input.style.backgroundColor = '#d1fae5';
+                            });
+                            correct++;
+                        } else {
+                            inputs.forEach(input => {
+                                if (input.value === '') {
+                                    input.style.backgroundColor = '#fee2e2';
+                                }
+                            });
+                        }
+                    }
+                }
+                
+                // Check down answers
+                for (const clueNumber in crosswordAnswers.down) {
+                    const answer = crosswordAnswers.down[clueNumber];
+                    const inputs = crosswordInputs[clueNumber];
+                    
+                    if (inputs) {
+                        total++;
+                        let userAnswer = '';
+                        inputs.forEach(input => {
+                            userAnswer += input.value || '';
+                        });
+                        
+                        if (userAnswer === answer) {
+                            inputs.forEach(input => {
+                                input.style.backgroundColor = '#d1fae5';
+                            });
+                            correct++;
+                        } else {
+                            inputs.forEach(input => {
+                                if (input.value === '') {
+                                    input.style.backgroundColor = '#fee2e2';
+                                }
+                            });
+                        }
+                    }
+                }
+                
+                const feedback = document.getElementById('feedback-5');
+                feedback.style.display = 'block';
+                
+                if (correct === total) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = `<p><strong>Excellent!</strong> You've completed the crossword puzzle correctly!</p>`;
+                    if (!completedExercisesSet.has(5)) {
+                        completedExercisesSet.add(5);
+                        updateProgress();
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Good attempt!</strong> You've correctly completed ${correct} out of ${total} words. Empty cells are highlighted in red.</p>`;
+                }
+            });
+            
+            // Reveal solution for Exercise 5
+            document.getElementById('reveal-btn-5').addEventListener('click', function() {
+                // Reveal across answers
+                for (const clueNumber in crosswordAnswers.across) {
+                    const answer = crosswordAnswers.across[clueNumber];
+                    const inputs = crosswordInputs[clueNumber];
+                    
+                    if (inputs) {
+                        inputs.forEach((input, index) => {
+                            input.value = answer[index];
+                            input.style.backgroundColor = '#ffe4e6';
+                            input.style.color = '#9f1239';
+                        });
+                    }
+                }
+                
+                // Reveal down answers
+                for (const clueNumber in crosswordAnswers.down) {
+                    const answer = crosswordAnswers.down[clueNumber];
+                    const inputs = crosswordInputs[clueNumber];
+                    
+                    if (inputs) {
+                        inputs.forEach((input, index) => {
+                            input.value = answer[index];
+                            input.style.backgroundColor = '#ffe4e6';
+                            input.style.color = '#9f1239';
+                        });
+                    }
+                }
+            });
+            
+            // Exercise 6: Case Study Analysis
+            const caseStudyAnswers = {
+                1: ['gender discrimination', 'sex discrimination', 'wage discrimination'],
+                2: ['retaliation'],
+                3: ['wrongful termination', 'retaliatory discharge', 'constructive dismissal', 'pretextual termination'],
+                4: ['eeoc complaint', 'wrongful termination lawsuit', 'discrimination lawsuit', 'retaliation lawsuit']
+            };
+            
+            // Check answers for Exercise 6
+            document.getElementById('check-btn-6').addEventListener('click', function() {
+                let correct = 0;
+                let total = Object.keys(caseStudyAnswers).length;
+                
+                for (let i = 1; i <= total; i++) {
+                    const userAnswer = document.getElementById(`case-answer-${i}`).value.trim().toLowerCase();
+                    const possibleAnswers = caseStudyAnswers[i];
+                    
+                    if (userAnswer) {
+                        let isCorrect = false;
+                        for (const answer of possibleAnswers) {
+                            if (userAnswer.includes(answer)) {
+                                isCorrect = true;
+                                break;
+                            }
+                        }
+                        
+                        if (isCorrect) {
+                            document.getElementById(`case-answer-${i}`).style.backgroundColor = '#d1fae5';
+                            document.getElementById(`case-answer-${i}`).style.borderColor = '#10b981';
+                            correct++;
+                        } else {
+                            document.getElementById(`case-answer-${i}`).style.backgroundColor = '#fee2e2';
+                            document.getElementById(`case-answer-${i}`).style.borderColor = '#ef4444';
+                        }
+                    } else {
+                        document.getElementById(`case-answer-${i}`).style.backgroundColor = '#fee2e2';
+                        document.getElementById(`case-answer-${i}`).style.borderColor = '#ef4444';
+                    }
+                }
+                
+                const feedback = document.getElementById('feedback-6');
+                feedback.style.display = 'block';
+                
+                if (correct === total) {
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = `<p><strong>Excellent analysis!</strong> You've correctly identified all key legal issues in the case study.</p>`;
+                    if (!completedExercisesSet.has(6)) {
+                        completedExercisesSet.add(6);
+                        updateProgress();
+                    }
+                } else {
+                    feedback.className = 'feedback incorrect';
+                    feedback.innerHTML = `<p><strong>Good attempt!</strong> You've correctly identified ${correct} out of ${total} legal issues. Try using more specific legal terminology.</p><p><strong>Key terms to consider:</strong> gender discrimination, retaliation, wrongful termination, constructive dismissal, EEOC complaint</p>`;
+                }
+            });
+            
+            // Print Certificate
+            document.getElementById('print-certificate-btn').addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Initialize exercises
+            initializeWordSearch();
+            initializeCrossword();
+        });
+    </script>
+</body>
+</html>
